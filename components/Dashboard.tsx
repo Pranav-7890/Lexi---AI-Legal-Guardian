@@ -69,18 +69,18 @@ const Dashboard: React.FC<Props> = ({ onSelectTemplate, onAnalyze }) => {
 
       <div className="mb-8">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-            <h2 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+            <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-50 flex items-center gap-2">
                 <FileSignature className="text-blue-600" />
                 Create a Document
             </h2>
             
             <div className="relative w-full md:w-80">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Search className="h-5 w-5 text-slate-400" />
+                    <Search className="h-5 w-5 text-slate-400 dark:text-slate-500" />
                 </div>
                 <input
                     type="text"
-                    className="block w-full pl-10 pr-3 py-3 border border-slate-200 rounded-xl leading-5 bg-white placeholder-slate-400 focus:outline-none focus:placeholder-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm shadow-sm transition-all"
+                    className="block w-full pl-10 pr-3 py-3 border border-slate-200 dark:border-slate-600 rounded-xl leading-5 bg-white dark:bg-slate-700 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:placeholder-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm shadow-sm transition-all text-slate-900 dark:text-slate-50"
                     placeholder="Search templates (e.g. Lease, NDA)..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -94,23 +94,23 @@ const Dashboard: React.FC<Props> = ({ onSelectTemplate, onAnalyze }) => {
                 <button
                     key={template.id}
                     onClick={() => onSelectTemplate(template)}
-                    className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md hover:border-blue-300 transition-all text-left group"
+                    className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md hover:border-blue-300 dark:hover:border-blue-500 transition-all text-left group"
                 >
                     <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                         {getIcon(template.icon)}
                     </div>
-                    <h3 className="font-bold text-slate-800 text-lg mb-2">{template.name}</h3>
-                    <p className="text-sm text-slate-500">{template.description}</p>
+                    <h3 className="font-bold text-slate-800 dark:text-slate-50 text-lg mb-2">{template.name}</h3>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">{template.description}</p>
                 </button>
                 ))}
             </div>
         ) : (
-            <div className="text-center py-16 bg-white rounded-2xl border border-dashed border-slate-300">
-                <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Search className="w-8 h-8 text-slate-400" />
+            <div className="text-center py-16 bg-white dark:bg-slate-800 rounded-2xl border border-dashed border-slate-300 dark:border-slate-600">
+                <div className="w-16 h-16 bg-slate-100 dark:bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Search className="w-8 h-8 text-slate-400 dark:text-slate-500" />
                 </div>
-                <h3 className="text-lg font-medium text-slate-900">No documents found</h3>
-                <p className="text-slate-500 mt-1">Try adjusting your search for "{searchTerm}"</p>
+                <h3 className="text-lg font-medium text-slate-900 dark:text-slate-50">No documents found</h3>
+                <p className="text-slate-500 dark:text-slate-400 mt-1">Try adjusting your search for "{searchTerm}"</p>
             </div>
         )}
       </div>

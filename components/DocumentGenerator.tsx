@@ -34,9 +34,9 @@ const DocumentGenerator: React.FC<Props> = ({ template, onBack }) => {
     try {
       const result = await generateLegalDocument(template.name, formValues, additionalDetails);
       setGeneratedContent(result);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      alert("Failed to generate document. Please try again.");
+      alert(error.message);
     } finally {
       setIsLoading(false);
     }
@@ -96,14 +96,14 @@ const DocumentGenerator: React.FC<Props> = ({ template, onBack }) => {
     return (
       <div className="max-w-5xl mx-auto p-4 sm:p-8">
         <div className="flex items-center justify-between mb-6 no-print">
-          <button onClick={() => setGeneratedContent(null)} className="flex items-center text-slate-600 hover:text-slate-900 font-medium">
+          <button onClick={() => setGeneratedContent(null)} className="flex items-center text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-50 font-medium">
             <ArrowLeft className="w-4 h-4 mr-2" /> Back to Edit
           </button>
           <div className="flex gap-3">
              <button 
                 onClick={handleDownload}
                 disabled={isDownloading}
-                className="flex items-center px-6 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 shadow-md transition-all font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center px-6 py-2 bg-slate-900 dark:bg-blue-700 text-white rounded-lg hover:bg-slate-800 dark:hover:bg-blue-800 shadow-md transition-all font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
             >
                 {isDownloading ? (
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
@@ -122,16 +122,16 @@ const DocumentGenerator: React.FC<Props> = ({ template, onBack }) => {
                 - Has padding (p-[25mm]) to look like paper.
                 - Has shadow and white bg.
             */}
-            <div className="bg-white shadow-2xl min-h-[297mm] w-[210mm] p-[25mm] shrink-0 relative">
+            <div className="bg-white dark:bg-slate-900 shadow-2xl min-h-[297mm] w-[210mm] p-[25mm] shrink-0 relative transition-colors duration-300">
                 {/* 
                     Capture Target (documentRef):
                     - Has NO padding. 
                     - This ensures html2pdf adds the margin evenly to all pages.
                 */}
-                <div ref={documentRef} className="font-[Times_New_Roman] text-[11pt] leading-[1.5] text-justify legal-content text-black h-full w-full bg-white">
+                <div ref={documentRef} className="font-[Times_New_Roman] text-[11pt] leading-[1.5] text-justify legal-content text-black dark:text-slate-100 h-full w-full bg-white dark:bg-slate-900 transition-colors duration-300">
                     <ReactMarkdown
                         components={{
-                            h1: ({node, ...props}) => <h1 className="text-[16pt] font-bold mb-8 text-center uppercase tracking-widest border-b-2 border-black pb-4" {...props} />,
+                            h1: ({node, ...props}) => <h1 className="text-[16pt] font-bold mb-8 text-center uppercase tracking-widest border-b-2 border-black dark:border-slate-300 pb-4" {...props} />,
                             h2: ({node, ...props}) => <h2 className="text-[13pt] font-bold mt-8 mb-4 uppercase" {...props} />,
                             h3: ({node, ...props}) => <h3 className="text-[11pt] font-bold mt-6 mb-2 underline" {...props} />,
                             p: ({node, ...props}) => <p className="mb-4" {...props} />,
@@ -152,12 +152,12 @@ const DocumentGenerator: React.FC<Props> = ({ template, onBack }) => {
 
   return (
     <div className="max-w-4xl mx-auto mb-12">
-      <button onClick={onBack} className="flex items-center text-slate-500 hover:text-slate-800 mb-6 transition-colors">
+      <button onClick={onBack} className="flex items-center text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-50 mb-6 transition-colors duration-300">
         <ArrowLeft className="w-4 h-4 mr-2" /> Back to Dashboard
       </button>
 
-      <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100">
-        <div className="bg-slate-900 p-8 text-white">
+      <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl overflow-hidden border border-slate-100 dark:border-slate-700 transition-colors duration-300">
+        <div className="bg-slate-900 dark:bg-slate-950 p-8 text-white transition-colors duration-300">
             <div className="flex items-center gap-4">
                 <div className="p-3 bg-white/10 rounded-xl backdrop-blur-sm">
                     <PenTool className="w-8 h-8 text-blue-300" />
@@ -173,7 +173,7 @@ const DocumentGenerator: React.FC<Props> = ({ template, onBack }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             {template.requiredFields.map((field) => (
                 <div key={field}>
-                    <label className="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">
+                    <label className="block text-sm font-bold text-slate-700 dark:text-slate-200 mb-2 uppercase tracking-wide">
                         {field} <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -181,7 +181,7 @@ const DocumentGenerator: React.FC<Props> = ({ template, onBack }) => {
                         value={formValues[field] || ''}
                         onChange={(e) => handleFieldChange(field, e.target.value)}
                         placeholder={`Enter ${field}...`}
-                        className="w-full p-3 bg-white text-slate-900 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all placeholder:text-slate-400"
+                        className="w-full p-3 bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-50 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-400"
                     />
                 </div>
             ))}
@@ -189,7 +189,7 @@ const DocumentGenerator: React.FC<Props> = ({ template, onBack }) => {
 
           <div className="mb-8">
             <div className="flex items-center justify-between mb-2">
-                <label className="block text-sm font-bold text-slate-700 uppercase tracking-wide">
+                <label className="block text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wide">
                     Additional Details / Specific Clauses <span className="text-red-500">*</span>
                 </label>
             </div>
@@ -197,7 +197,7 @@ const DocumentGenerator: React.FC<Props> = ({ template, onBack }) => {
               value={additionalDetails}
               onChange={(e) => setAdditionalDetails(e.target.value)}
               placeholder="Describe any specific terms, payment schedules, special conditions, or custom clauses you want included..."
-              className="w-full p-4 h-40 bg-white text-slate-900 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all resize-none placeholder:text-slate-400"
+              className="w-full p-4 h-40 bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-50 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all resize-none placeholder:text-slate-400 dark:placeholder:text-slate-400"
             />
           </div>
 
@@ -206,7 +206,7 @@ const DocumentGenerator: React.FC<Props> = ({ template, onBack }) => {
             disabled={!isFormValid() || isLoading}
             className={`w-full py-4 rounded-xl text-white font-bold text-lg flex items-center justify-center gap-3 transition-all shadow-lg ${
               !isFormValid() || isLoading
-                ? 'bg-slate-300 cursor-not-allowed text-slate-500'
+                ? 'bg-slate-300 dark:bg-slate-700 cursor-not-allowed text-slate-500 dark:text-slate-400'
                 : 'bg-blue-600 hover:bg-blue-700 hover:shadow-xl hover:-translate-y-1'
             }`}
           >
